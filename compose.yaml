@@ -1,6 +1,6 @@
 networks:
-  dockge_inside:
-  dockge_outside:
+  inside:
+  outside:
 services:
   caddy:
     build:
@@ -10,8 +10,8 @@ services:
     container_name: caddy
     restart: unless-stopped
     networks:
-      - dockge_outside
-      - dockge_inside
+      - outside
+      - inside
     ports:
       - 9080:80
       - 9443:443
@@ -33,7 +33,7 @@ services:
     depends_on:
       - caddy
     networks:
-      - dockge_inside
+      - inside
     expose:
       - 5001
     volumes:
