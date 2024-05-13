@@ -1,0 +1,26 @@
+{
+	admin off
+	email {$HOST_EMAIL}
+	servers {
+		# Disable Quic/H3
+		# You can re-enable it by removing the following line or adding 'h3' to the protocols list.
+		protocols h1 h2
+	}
+}
+(securityheaders) {
+	header {
+		# Disable clients from sniffing the media type
+		X-Content-Type-Options nosniff
+		# Clickjacking protection
+		X-Frame-Options DENY
+		# Keep referrer data off of HTTP connections
+		Referrer-Policy no-referrer-when-downgrade
+	}
+}
+{$HOST_FQDN} {
+	tls {
+		dns cloudflare {$AUTH_TOKEN}
+	}
+	import securityheaders
+	reverse_proxy dockge:5001
+}
