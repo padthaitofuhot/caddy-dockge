@@ -1,0 +1,26 @@
+services:
+  caddy:
+    build:
+      context: /opt/stacks/caddy
+      dockerfile: /opt/stacks/caddy/Containerfile
+    image: caddy:cloudflare
+    #image: padthaitofuhot/caddy:cloudflare
+    container_name: caddy
+    restart: unless-stopped
+    env_file: .env
+    networks:
+      - dockge_outside
+      - dockge_inside
+    ports:
+      - 443:443
+      - 8443:8443
+      - 9443:9443
+    volumes:
+      - /opt/stacks/caddy/Caddyfile:/etc/caddy/Caddyfile
+      - /opt/stacks/caddy/caddy_data:/data
+    environment: []
+networks:
+  dockge_inside:
+    external: true
+  dockge_outside:
+    external: true

@@ -1,0 +1,15 @@
+services:
+  filebrowser:
+    volumes:
+      - /opt/stacks:/srv
+      - /opt/dockge:/srv/dockge
+      - /opt/stacks/filebrowser/filebrowser.db:/database/filebrowser.db
+      - /opt/stacks/filebrowser/.filebrowser.json:/.filebrowser.json
+    networks:
+      - dockge_inside
+    expose:
+      - 8080
+    image: filebrowser/filebrowser
+networks:
+  dockge_inside:
+    external: true
