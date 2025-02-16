@@ -9,5 +9,7 @@ for dir in dockge stacks; do
 done
 
 for service in /opt/dockge /opt/stacks/caddy /opt/stacks/filebrowser; do
-  sudo docker compose up -f "${service}"/compose.yml -d
+  cd "${service}" || exit 1
+  sudo docker compose build
+  sudo docker compose up --pull -d
 done
