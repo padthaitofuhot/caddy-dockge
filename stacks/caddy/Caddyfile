@@ -19,7 +19,7 @@
 }
 {$HOST_FQDN} {
 	tls {
-		dns cloudflare {$AUTH_TOKEN}
+		dns cloudflare {$API_TOKEN}
 	}
 	import securityheaders
 	# Change this to point to your default webserver
@@ -27,7 +27,7 @@
 }
 {$HOST_FQDN}:9443 {
     tls {
-        dns cloudflare {$CF_API_TOKEN}
+        dns cloudflare {$API_TOKEN}
     }
     import securityheaders
     reverse_proxy dockge:5001
