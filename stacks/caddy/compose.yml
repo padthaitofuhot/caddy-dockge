@@ -3,8 +3,7 @@ services:
     build:
       context: /opt/stacks/caddy
       dockerfile: /opt/stacks/caddy/Containerfile
-    image: caddy:cloudflare
-    #image: padthaitofuhot/caddy:cloudflare
+    image: padthaitofuhot/caddy:cloudflare
     container_name: caddy
     restart: unless-stopped
     env_file: .env
