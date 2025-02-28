@@ -8,5 +8,7 @@ sudo find "/opt/stacks" -type f | sudo xargs chmod -c 0640
 
 for service in /opt/stacks/caddy /opt/stacks/dockge; do
   cd "${service}" || exit 1
-  sudo docker compose up --pull --build -d
+  sudo docker compose pull
+  sudo docker compose build
+  sudo docker compose up -d
 done
