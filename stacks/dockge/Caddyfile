@@ -8,11 +8,13 @@
 		protocols h1 h2
 	}
 }
+
 (logging) {
 	log {
 		level INFO
     }
 }
+
 (securityheaders) {
 	header {
 		# Disable clients from sniffing the media type
@@ -23,14 +25,24 @@
 		Referrer-Policy no-referrer-when-downgrade
 	}
 }
+
 {$HOST_FQDN} {
-	tls {
-		dns cloudflare {$API_TOKEN}
+    tls {
+        dns cloudflare {$API_TOKEN}
 	}
 	import securityheaders
 	# Change this to point to your default webserver
 	reverse_proxy dockge:5001
 }
+
+{$HOST_FQDN}:8443 {
+                tls {
+                    dns cloudflare {$API_TOKEN}
+                }
+                import securityheaders
+                reverse_proxy filebrowser:8080
+            }
+
 {$HOST_FQDN}:9443 {
     tls {
         dns cloudflare {$API_TOKEN}
