@@ -1,10 +1,32 @@
-networks:
-  inside:
-  outside:
 services:
+
+  noop:
+    image: padthaitofuhot/noop:running
+    networks:
+      - inside
+    restart: no
+
+  caddy:
+    build:
+      context: /opt/stacks/dockge
+      dockerfile: /opt/stacks/dockge/Containerfile
+    image: padthaitofuhot/caddy:cloudflare
+    container_name: caddy
+    restart: unless-stopped
+    networks:
+      - outside
+      - inside
+    ports:
+      - 443:443
+      - 9443:9443
+    volumes:
+      - /opt/stacks/dockge/Caddyfile:/etc/caddy/Caddyfile
+      - /opt/stacks/dockge/caddy_data:/data
+
   dockge:
     image: louislam/dockge:1
     restart: unless-stopped
+    env_file: /opt/stacks/dockge/.env
     networks:
       - inside
     expose:
@@ -12,20 +34,16 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /opt/dockge/data:/app/data
-
-      # If you want to use private registries, you need to share the auth file with Dockge:
-      - /root/.docker/:/root/.docker
-
+      #
       # Stacks Directory
       # ⚠️ READ IT CAREFULLY. If you did it wrong, your data could end up writing into a WRONG PATH.
       # ⚠️ 1. FULL path only. No relative path (MUST)
       # ⚠️ 2. Left Stacks Path === Right Stacks Path (MUST)
       - /opt/stacks:/opt/stacks
-    environment:
-      # Tell Dockge where is your stacks directory
-      - DOCKGE_STACKS_DIR=/opt/stacks
-  noop:
-    image: padthaitofuhot/noop:running
-    networks:
-      - outside
-    restart: no
+      #
+      # If you want to use private registries, you need to share the auth file with Dockge:
+      - /root/.docker/:/root/.docker
+
+networks:
+  inside:
+  outside:
