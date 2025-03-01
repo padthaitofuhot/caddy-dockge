@@ -18,10 +18,10 @@ services:
       - outside
       - inside
     ports:
-      - 80
-      - 443
-      - 8443
-      - 9443
+      - 80:80
+      - 443:443
+      - 8443:8443
+      - 9443:9443
     volumes:
       - /opt/stacks/dockge/Caddyfile:/etc/caddy/Caddyfile
       - /opt/stacks/dockge/caddy_data:/data
