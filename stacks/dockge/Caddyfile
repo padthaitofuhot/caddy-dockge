@@ -1,11 +1,17 @@
 {
 	admin off
 	email {$HOST_EMAIL}
+	default_sni {$HOST_FQDN}
 	servers {
 		# Disable Quic/H3
 		# You can re-enable it by removing the following line or adding 'h3' to the protocols list.
 		protocols h1 h2
 	}
+}
+(logging) {
+	log {
+		level INFO
+    }
 }
 (securityheaders) {
 	header {
