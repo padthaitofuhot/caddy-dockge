@@ -1,47 +1,47 @@
 {
-	admin off
-	email {$HOST_EMAIL}
-	default_sni {$HOST_FQDN}
-	servers {
-		# Disable Quic/H3
-		# You can re-enable it by removing the following line or adding 'h3' to the protocols list.
-		protocols h1 h2
-	}
+    admin off
+    email {$HOST_EMAIL}
+    default_sni {$HOST_FQDN}
+    servers {
+        # Disable Quic/H3
+        # You can re-enable it by removing the following line or adding 'h3' to the protocols list.
+        protocols h1 h2
+    }
 }
 
 (logging) {
-	log {
-		level INFO
+    log {
+        level INFO
     }
 }
 
 (securityheaders) {
-	header {
-		# Disable clients from sniffing the media type
-		X-Content-Type-Options nosniff
-		# Clickjacking protection
-		X-Frame-Options DENY
-		# Keep referrer data off of HTTP connections
-		Referrer-Policy no-referrer-when-downgrade
-	}
+    header {
+        # Disable clients from sniffing the media type
+        X-Content-Type-Options nosniff
+        # Clickjacking protection
+        X-Frame-Options DENY
+        # Keep referrer data off of HTTP connections
+        Referrer-Policy no-referrer-when-downgrade
+    }
 }
 
 {$HOST_FQDN} {
     tls {
         dns cloudflare {$API_TOKEN}
-	}
-	import securityheaders
-	# Change this to point to your default webserver
-	reverse_proxy dockge:5001
+    }
+    import securityheaders
+    # Change this to point to your default webserver
+    reverse_proxy dockge:5001
 }
 
 {$HOST_FQDN}:8443 {
-                tls {
-                    dns cloudflare {$API_TOKEN}
-                }
-                import securityheaders
-                reverse_proxy filebrowser:8080
-            }
+    tls {
+        dns cloudflare {$API_TOKEN}
+    }
+    import securityheaders
+    reverse_proxy filebrowser:8080
+}
 
 {$HOST_FQDN}:9443 {
     tls {
