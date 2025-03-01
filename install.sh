@@ -10,4 +10,4 @@ sudo find "/opt/stacks" -type f | sudo xargs chmod -c 0640
 export COMPOSE_BAKE=true
 
 cd "/opt/stacks/dockge" || exit 1
-sudo docker compose up -f /opt/stacks/compose.yml --build --pull always -d
+sudo docker compose -f /opt/stacks/compose.yml up --build --pull always -d
