@@ -3,3 +3,6 @@ RUN caddy-builder \
     github.com/caddy-dns/cloudflare
 FROM caddy:latest
 COPY --from=cb /usr/bin/caddy /usr/bin/caddy
+RUN apk update \
+    && apk upgrade \
+    && apk add nss-tools
