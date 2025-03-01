@@ -1,10 +1,10 @@
 services:
 
-  noop:
-    image: padthaitofuhot/noop:running
-    networks:
-      - inside
-    restart: no
+#   noop:
+#     image: padthaitofuhot/noop:running
+#     networks:
+#       - inside
+#     restart: no
 
   caddy:
     build:
@@ -26,6 +26,7 @@ services:
 
   dockge:
     image: louislam/dockge:1
+    container_name: dockge
     restart: unless-stopped
     env_file: /opt/stacks/dockge/.env
     networks:
