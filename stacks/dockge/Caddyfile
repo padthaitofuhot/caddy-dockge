@@ -26,7 +26,11 @@
     }
 }
 
-{$HOST_FQDN} {
+http://{$HOST_FQDN} {
+    redir https://{$HOST_FQDN}{uri} permanent
+}
+
+https://{$HOST_FQDN} {
     tls {
         dns cloudflare {$API_TOKEN}
     }
