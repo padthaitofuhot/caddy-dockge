@@ -53,7 +53,7 @@ services:
     volumes:
       - /opt/stacks:/srv
       - /opt/stacks/dockge/filebrowser_data/database:/database
-      - /opt/stacks/dockge/filebrowser_data/.filebrowser.json:/.filebrowser.json
+      - /opt/stacks/dockge/filebrowser_data/.filebrowser.json:/.filebrowser.json,ro
 
 networks:
   inside:
