@@ -11,6 +11,7 @@
 
 (logging) {
     log {
+        output stdout
         level INFO
     }
 }
@@ -39,18 +40,17 @@ https://{$HOST_FQDN} {
     reverse_proxy dockge:5001
 }
 
-{$HOST_FQDN}:8443 {
-    tls {
-        dns cloudflare {$API_TOKEN}
-    }
-    import securityheaders
-    reverse_proxy filebrowser:8080
-}
-
 {$HOST_FQDN}:9443 {
     tls {
         dns cloudflare {$API_TOKEN}
     }
     import securityheaders
-    reverse_proxy dockge:5001
+    route /dockge/* {
+        uri strip_prefix /dockge
+        reverse_proxy dockge:5001
+    }
+    route /filebrowser/* {
+        uri strip /filebrowser
+        reverse_proxy filebrowser:8080
+    }
 }
