@@ -4,7 +4,7 @@ services:
     build:
       context: /opt/stacks/dockge
       dockerfile: /opt/stacks/dockge/Containerfile
-    image: padthaitofuhot/caddy:cloudflare
+    image: docker.io/padthaitofuhot/caddy:cloudflare
     container_name: caddy
     restart: unless-stopped
     env_file: /opt/stacks/dockge/.env
@@ -21,7 +21,7 @@ services:
       - /opt/stacks/dockge/caddy_data:/data
 
   dockge:
-    image: louislam/dockge:1
+    image: docker.io/louislam/dockge:1
     container_name: dockge
     restart: unless-stopped
     env_file: /opt/stacks/dockge/.env
@@ -37,7 +37,7 @@ services:
       #- /root/.docker/:/root/.docker
 
   filebrowser:
-    image: filebrowser/filebrowser
+    image: docker.io/filebrowser/filebrowser:latest
     container_name: filebrowser
     restart: unless-stopped
     networks:

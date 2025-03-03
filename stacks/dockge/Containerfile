@@ -1,8 +1,8 @@
-FROM caddy:builder AS cb
+FROM docker.io/library/caddy:builder AS cb
 RUN caddy-builder \
     github.com/caddy-dns/cloudflare \
     github.com/caddyserver/transform-encoder
-FROM caddy:latest
+FROM docker.io/library/caddy:latest
 COPY --from=cb /usr/bin/caddy /usr/bin/caddy
 RUN apk update \
     && apk upgrade \
