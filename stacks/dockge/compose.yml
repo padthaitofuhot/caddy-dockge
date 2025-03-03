@@ -1,12 +1,5 @@
 services:
 
-  # The noop container keeps these networks from getting pruned on compose down
-  noop:
-    image: padthaitofuhot/noop:running
-    networks:
-      - inside
-    restart: no
-
   caddy:
     build:
       context: /opt/stacks/dockge
@@ -21,16 +14,11 @@ services:
     ports:
       - 80:80
       - 443:443
+      # Management services live on this port
       - 9443:9443
     volumes:
       - /opt/stacks/dockge/Caddyfile:/etc/caddy/Caddyfile:ro
       - /opt/stacks/dockge/caddy_data:/data
-    develop:
-      watch:
-        - action: rebuild
-          path: ./Caddyfile
-        - action: rebuild
-          path: ./compose.yml
 
   dockge:
     image: louislam/dockge:1
@@ -47,10 +35,6 @@ services:
       - /opt/stacks:/opt/stacks
       # If you want to use private registries, you need to share the auth file with Dockge:
       #- /root/.docker/:/root/.docker
-    develop:
-      watch:
-        - action: rebuild
-          path: ./compose.yml
 
   filebrowser:
     image: filebrowser/filebrowser
@@ -64,9 +48,6 @@ services:
       - /opt/stacks:/srv
       - /opt/stacks/dockge/filebrowser_data/database:/database
       - /opt/stacks/dockge/filebrowser_data/.filebrowser.json:/.filebrowser.json:ro
-    watch:
-      - action: rebuild
-        path: ./compose.yml
 
 networks:
   inside:

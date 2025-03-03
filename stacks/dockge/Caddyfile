@@ -40,17 +40,17 @@ https://{$HOST_FQDN} {
     reverse_proxy dockge:5001
 }
 
-{$HOST_FQDN}:9443 {
+dockge.{$HOST_FQDN}:9443 {
     tls {
         dns cloudflare {$API_TOKEN}
     }
     import securityheaders
-    route /dockge/* {
-        uri strip_prefix /dockge
-        reverse_proxy dockge:5001
+    reverse_proxy dockge:5001
+}
+filebrowser.{$HOST_FQDN}:9443 {
+    tls {
+        dns cloudflare {$API_TOKEN}
     }
-    route /filebrowser/* {
-        uri strip /filebrowser
-        reverse_proxy filebrowser:8080
-    }
+    import securityheaders
+    reverse_proxy filebrowser:8080
 }
